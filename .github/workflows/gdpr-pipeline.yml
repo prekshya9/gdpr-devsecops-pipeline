@@ -1,0 +1,33 @@
+name: GDPR DevSecOps & Compliance Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  gdpr-security-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Bearer CLI
+        run: |
+          curl -sfL https://raw.githubusercontent.com/Bearer/bearer/main/contrib/install.sh | sh
+          sudo mv ./bin/bearer /usr/local/bin/
+
+      - name: Run Bearer SAST & PII Scan
+        run: |
+          bearer scan . --format=json --output=bearer-report.json || true
+
+      - name: Enforce GDPR Article 25/32 Compliance Gate
+        run: |
+          python enforce_gdpr_policy.py bearer-report.json
