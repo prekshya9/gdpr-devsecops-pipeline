@@ -1,3 +1,5 @@
+![GDPR DevSecOps Pipeline](https://github.com/prekshya9/gdpr-devsecops-pipeline/actions/workflows/gdpr-pipeline.yml/badge.svg)
+
 # GDPR Automated Compliance & DevSecOps Pipeline
 
 An automated DevSecOps pipeline implementing **Policy-as-Code** to enforce **GDPR Article 25 (Data Protection by Design and by Default)** and **GDPR Article 32 (Security of Processing)** within a continuous integration (CI/CD) workflow.
